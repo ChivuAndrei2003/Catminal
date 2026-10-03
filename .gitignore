@@ -9,6 +9,7 @@ artifacts/
 *.snupkg
 .idea/
 .DS_
+global.json
 # User-specific files
 *.user
 *.suo
