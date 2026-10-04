@@ -1,4 +1,3 @@
-/*
  * Catminal_pty.c - native PTY (pseudo-terminal) layer for Catminal
  * (macOS, Linux).
  *
@@ -119,4 +118,4 @@
  *       and decide for themselves what to do.
  *     - Catminal_kill bypasses the terminal: it delivers a signal straight
  *       to a pid, whatever state the terminal is in.
- */
+ 
