@@ -10,6 +10,7 @@ artifacts/
 .idea/
 .DS_
 global.json
+Native/build/
 # User-specific files
 *.user
 *.suo

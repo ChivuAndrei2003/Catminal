@@ -5,11 +5,17 @@
 		<Nullable>enable</Nullable>
 		<ApplicationManifest>app.manifest</ApplicationManifest>
 		<AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <NativeDir>$(MSBuildThisFileDirectory)Native/</NativeDir>
+        <NativeLibName Condition="$([MSBuild]::IsOSPlatform('OSX'))">libCatminal_pty.dylib</NativeLibName>
+        <NativeLibName Condition="$([MSBuild]::IsOSPlatform('Linux'))">libCatminal_pty.so</NativeLibName>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<Folder Include="Models\" />
 		<AvaloniaResource Include="Assets\**" />
+		<Folder Include="Pty\" />
+		<Folder Include="Vt\" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -23,5 +29,14 @@
 		</PackageReference>
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.1" />
 		<PackageReference Include="Tmds.LibC" Version="0.5.0" />
+	</ItemGroup>
+
+	<Target Name="BuildNativeHelper" BeforeTargets="BeforeBuild" Condition="'$(NativeLibName)' != ''">
+	<Exec Command="make -C &quot;$(NativeDir)&quot;" />
+    </Target>
+
+	<ItemGroup Condition="'$(NativeLibName)' != ''">
+	<None Remove="Native/build/**" />
+	<None Include="$(NativeDir)build/$(NativeLibName)" Link="$(NativeLibName)" CopyToOutputDirectory="PreserveNewest" Visible="false" />
 	</ItemGroup>
 </Project>
